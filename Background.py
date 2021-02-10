@@ -8,6 +8,7 @@ class Background():
     ENEMY_SPAWN = 2
     SPACE = 3
     _tileSet = None
+    
 
     def __init__(self):
         self._floor = pygame.image.load(Helpers.ASSETS + "Floor.png")
