@@ -17,15 +17,15 @@ class Enemy(pygame.sprite.Sprite):
                   Helpers.Direction.DOWN: BOTTOM_SPAWN,
                   Helpers.Direction.LEFT: LEFT_SPAWN}
 
-    spawnDirection = Helpers.Direction.UP # Star spawning enemies at the top of the map
+    spawnDirection = Helpers.Direction.UP # Used to determine where to start spawning enemies;
+                                          # Start spawning enemies at the top of the map
 
-    def __init__(self):
+    def __init__(self, spawn: tuple):
         super().__init__()
         self.image = pygame.image.load(Helpers.ASSETS + "enemy.png")
         self.surface = pygame.Surface((22, 22))
         self.rect = self.surface.get_rect()
-        x, y = random.randrange(0, Helpers.GAME_WIDTH), random.randrange(0, Helpers.GAME_HEIGHT)
-        self.rect.center = (x, y)
+        self.rect.center = (spawn[0] * Helpers.GAME_TILE, spawn[1] * Helpers.GAME_TILE)
         self._speed = 3
 
     def update(self):
@@ -51,4 +51,14 @@ class Enemy(pygame.sprite.Sprite):
     """
     @classmethod
     def spawnEnemy(cls, num: int) -> list:
-        pass
+        spawnPoints = cls.SPAWN_DICT[cls.spawnDirection]
+        enemies = []
+        idx = 0
+        for i in range(num):
+            if idx == len(spawnPoints):
+                idx = 0
+            enemies.append(cls(spawnPoints[idx]))
+
+        cls.spawnDirection = Helpers.Direction.rotateDirection(cls.spawnDirection)
+        
+        return enemies

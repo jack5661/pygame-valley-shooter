@@ -35,11 +35,11 @@ class App:
             self._running = False
 
     def on_loop(self):
-        return
         if self._enemyTimer == self._ENEMYSPAWNTIME:
-            enemy = Enemy()
-            self._entities.add(enemy)
-            self._mobs.add(enemy)
+            toSpawn = Enemy.spawnEnemy(1)
+            for mob in toSpawn:
+                self._entities.add(mob)
+                self._mobs.add(mob)
             self._enemyTimer = 0
         else:
             self._enemyTimer += 1

@@ -17,3 +17,15 @@ class Direction:
     DOWN = 2
     LEFT = 3
 
+    @classmethod
+    def rotateDirection(cls, dir: "Direction") -> "Direction":
+        if dir == cls.UP:
+            return cls.RIGHT
+        elif dir == cls.RIGHT:
+            return cls.DOWN
+        elif dir == cls.DOWN:
+             return cls.LEFT
+        elif dir == cls.LEFT:
+            return cls.UP
+        
+
