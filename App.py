@@ -12,13 +12,13 @@ class App:
     def __init__(self):
         self._running = True
         self._display_surf = None
-        self._FPS = 30
         self._enemyTimer = 0
-        self._ENEMYSPAWNTIME = self._FPS * 2
+        self._ENEMYSPAWNTIME = Helpers.FPS * 2
         self._player = Player()
         self._entities = pygame.sprite.Group()
         self._entities.add(self._player)
         self._mobs = pygame.sprite.Group()
+        self._bullets = pygame.sprite.Group()
         self._background = Background()
  
     def on_init(self):
@@ -46,8 +46,8 @@ class App:
 
         mob = pygame.sprite.spritecollideany(self._player, self._mobs)
         if mob:
-            mob.kill()
-
+            self._player.killed()
+        pygame.sprite.groupcollide(self._bullets, self._mobs, True, True)
 
     def on_render(self):
         self._display_surf.fill(Helpers.Colours.BLANK)
@@ -68,14 +68,22 @@ class App:
             for event in pygame.event.get():
                 self.on_event(event)
 
-            for entity in self._entities:
-                entity.update()
+            shots = self._player.update()
+            for shot in shots:
+                self._bullets.add(shot)
+                self._entities.add(shot)
+            
+            for mob in self._mobs:
+                mob.update(self._player.getCoords())
+            
+            for bullet in self._bullets:
+                bullet.update()
 
             self.on_loop()
 
             self.on_render()
 
-            pygame.time.Clock().tick(self._FPS)
+            pygame.time.Clock().tick(Helpers.FPS)
 
         self.on_cleanup()
 

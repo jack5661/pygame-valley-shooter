@@ -1,10 +1,13 @@
 import pygame
+import random
 
 ASSETS = "assets/"
 
 GAME_SIZE = GAME_WIDTH, GAME_HEIGHT = 650, 400
 
 GAME_TILE = 50
+
+FPS = 30
 
 class Colours:
     BLACK = pygame.Color(0, 0, 0)
@@ -27,5 +30,9 @@ class Direction:
              return cls.LEFT
         elif dir == cls.LEFT:
             return cls.UP
+    
+    @staticmethod
+    def randomDirection():
+        return random.randrange(0, 4)
         
 
