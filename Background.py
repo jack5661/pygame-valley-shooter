@@ -11,8 +11,8 @@ class Background():
     
 
     def __init__(self):
-        self._floor = pygame.image.load(Helpers.ASSETS + "Floor.png")
-        self._rock = pygame.image.load(Helpers.ASSETS + "Rock.png")
+        self._floor = pygame.image.load(Helpers.Assets.FLOOR)
+        self._rock = pygame.image.load(Helpers.Assets.ROCK)
         self._surface = pygame.Surface((Helpers.GAME_TILE, Helpers.GAME_TILE))
         self._rect = self._surface.get_rect()
         self._tileDict = {self.ROCK: self._rock, self.FLOOR: self._floor, self.ENEMY_SPAWN: self._floor}

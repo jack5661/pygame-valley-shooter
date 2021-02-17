@@ -4,6 +4,7 @@ from pygame.locals import *
 import Helpers
 from Player import Player
 from Enemy import Enemy
+from Clock import Clock
 from Bound_Detector import Bound_Detector
 from Background import Background
 
@@ -20,9 +21,11 @@ class App:
         self._mobs = pygame.sprite.Group()
         self._bullets = pygame.sprite.Group()
         self._background = Background()
+        self._clock = None
  
     def on_init(self):
         pygame.init()
+        self._clock = Clock(pygame.font)
         self._display_surf = pygame.display.set_mode(self.size, pygame.HWSURFACE | pygame.DOUBLEBUF)
         self._running = True
         pygame.display.set_caption("Life in the Valley")
@@ -31,12 +34,15 @@ class App:
     def on_event(self, event):
         print("Event: ", event.type)
 
+        pressedKeys = pygame.keys.get_pressed()
+        #if pressedKeys[K_]
+
         if event.type == pygame.QUIT:
             self._running = False
 
     def on_loop(self):
-        if self._enemyTimer == self._ENEMYSPAWNTIME:
-            toSpawn = Enemy.spawnEnemy(1)
+        if self._player.isAlive() and self._enemyTimer == self._ENEMYSPAWNTIME:
+            toSpawn = Enemy.spawnEnemy(self._clock.getRound() + 1)
             for mob in toSpawn:
                 self._entities.add(mob)
                 self._mobs.add(mob)
@@ -47,13 +53,17 @@ class App:
         mob = pygame.sprite.spritecollideany(self._player, self._mobs)
         if mob:
             self._player.killed()
+            self._clock.kill()
         pygame.sprite.groupcollide(self._bullets, self._mobs, True, True)
+
+        self._clock.incrTime()
 
     def on_render(self):
         self._display_surf.fill(Helpers.Colours.BLANK)
         self._background.draw(self._display_surf)
         for entity in self._entities:
             entity.draw(self._display_surf)
+        self._clock.render(self._display_surf)
         pygame.display.update()
 
     def on_cleanup(self):
@@ -69,6 +79,7 @@ class App:
                 self.on_event(event)
 
             shots = self._player.update()
+
             for shot in shots:
                 self._bullets.add(shot)
                 self._entities.add(shot)

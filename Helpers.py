@@ -1,7 +1,13 @@
 import pygame
 import random
 
-ASSETS = "assets/"
+class Assets:
+    ASSETS_PATH = "assets/"
+    PLAYER = ASSETS_PATH + "player.png"
+    ROCK = ASSETS_PATH + "Rock.png"
+    FLOOR = ASSETS_PATH + "Floor.png"
+    ENEMY = ASSETS_PATH + "enemy.png"
+    BULLET = ASSETS_PATH + "bullet.png"
 
 GAME_SIZE = GAME_WIDTH, GAME_HEIGHT = 650, 400
 

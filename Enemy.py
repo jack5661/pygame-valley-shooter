@@ -3,7 +3,7 @@ from pygame.locals import *
 import Helpers
 from Helpers import Direction
 from Bound_Detector import Bound_Detector
-
+import random
 
 class Enemy(pygame.sprite.Sprite):
     
@@ -22,13 +22,13 @@ class Enemy(pygame.sprite.Sprite):
     spawnDirection = Helpers.Direction.UP # Used to determine where to start spawning enemies;
                                           # Start spawning enemies at the top of the map
 
-    def __init__(self, spawn: tuple):
+    def __init__(self, spawn: tuple, speed: int):
         super().__init__()
-        self.image = pygame.image.load(Helpers.ASSETS + "enemy.png")
+        self.image = pygame.image.load(Helpers.Assets.ENEMY)
         self.surface = pygame.Surface((22, 22))
         self.rect = self.surface.get_rect()
         self.rect.center = (spawn[0], spawn[1])
-        self._speed = 1
+        self._speed = speed
 
     def update(self, playerCoords: tuple):
         if playerCoords is None:
@@ -66,7 +66,8 @@ class Enemy(pygame.sprite.Sprite):
                 idx = 0
             spawn = spawnPoints[idx]
             spawn = adder(spawn[0]), adder(spawn[1])
-            enemies.append(cls(spawn))
+            enemies.append(cls(spawn, 1 + idx))
+            idx += 1
 
         cls.spawnDirection = Helpers.Direction.rotateDirection(cls.spawnDirection)
         
