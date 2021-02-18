@@ -22,6 +22,7 @@ class App:
         self._bullets = pygame.sprite.Group()
         self._background = Background()
         self._clock = None
+        self._paused = False
  
     def on_init(self):
         pygame.init()
@@ -34,8 +35,14 @@ class App:
     def on_event(self, event):
         print("Event: ", event.type)
 
-        pressedKeys = pygame.keys.get_pressed()
-        #if pressedKeys[K_]
+        if event.type == pygame.KEYDOWN:
+            if event.key == K_SPACE:
+                self._paused = not self._paused
+                
+            if event.key == K_r:
+                self.__init__()
+                self._clock = Clock(pygame.font)
+                self._display_surf = pygame.display.set_mode(self.size, pygame.HWSURFACE | pygame.DOUBLEBUF)
 
         if event.type == pygame.QUIT:
             self._running = False
@@ -54,6 +61,7 @@ class App:
         if mob:
             self._player.killed()
             self._clock.kill()
+            self._paused = True
         pygame.sprite.groupcollide(self._bullets, self._mobs, True, True)
 
         self._clock.incrTime()
@@ -75,26 +83,34 @@ class App:
         
         while (self._running):
 
-            for event in pygame.event.get():
-                self.on_event(event)
+            if not self._paused:
 
-            shots = self._player.update()
+                for event in pygame.event.get():
+                    self.on_event(event)
 
-            for shot in shots:
-                self._bullets.add(shot)
-                self._entities.add(shot)
+                shots = self._player.update()
+
+                for shot in shots:
+                    self._bullets.add(shot)
+                    self._entities.add(shot)
+                
+                for mob in self._mobs:
+                    mob.update(self._player.getCoords())
+                
+                for bullet in self._bullets:
+                    bullet.update()
+
+                self.on_loop()
+
+                self.on_render()
             
-            for mob in self._mobs:
-                mob.update(self._player.getCoords())
-            
-            for bullet in self._bullets:
-                bullet.update()
+            else:
+                for event in pygame.event.get():
+                    self.on_event(event)
 
-            self.on_loop()
-
-            self.on_render()
 
             pygame.time.Clock().tick(Helpers.FPS)
+
 
         self.on_cleanup()
 
