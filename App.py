@@ -7,9 +7,9 @@ from Enemy import Enemy
 from Clock import Clock
 from Bound_Detector import Bound_Detector
 from Background import Background
+from Opening import Opening
 
 class App:
-    size = width, height = Helpers.GAME_SIZE
     def __init__(self):
         self._running = True
         self._display_surf = None
@@ -27,7 +27,7 @@ class App:
     def on_init(self):
         pygame.init()
         self._clock = Clock(pygame.font)
-        self._display_surf = pygame.display.set_mode(self.size, pygame.HWSURFACE | pygame.DOUBLEBUF)
+        self._display_surf = pygame.display.set_mode(Helpers.GAME_SIZE, pygame.HWSURFACE | pygame.DOUBLEBUF)
         self._running = True
         pygame.display.set_caption("Life in the Valley")
         
@@ -42,7 +42,7 @@ class App:
             if event.key == K_r:
                 self.__init__()
                 self._clock = Clock(pygame.font)
-                self._display_surf = pygame.display.set_mode(self.size, pygame.HWSURFACE | pygame.DOUBLEBUF)
+                self._display_surf = pygame.display.set_mode(Helpers.GAME_SIZE, pygame.HWSURFACE | pygame.DOUBLEBUF)
 
         if event.type == pygame.QUIT:
             self._running = False
@@ -110,7 +110,6 @@ class App:
 
 
             pygame.time.Clock().tick(Helpers.FPS)
-
 
         self.on_cleanup()
 
