@@ -23,6 +23,7 @@ class App:
         self._background = Background()
         self._clock = None
         self._paused = False
+        self._opening = Opening()
  
     def on_init(self):
         pygame.init()
@@ -46,6 +47,9 @@ class App:
 
         if event.type == pygame.QUIT:
             self._running = False
+
+        if event.type == pygame.MOUSEBUTTONDOWN:
+
 
     def on_loop(self):
         if self._player.isAlive() and self._enemyTimer == self._ENEMYSPAWNTIME:

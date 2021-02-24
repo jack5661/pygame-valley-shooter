@@ -12,5 +12,13 @@ class Opening:
         self._playBtnSurface = pygame.Surface((self._playBtn.get_width(), self._playBtn.get_height()))
         self._playBtnRect = self._playBtnSurface.get_rect()
 
+        self._alive = True
+
     def draw(self, surface):
         pass
+
+    def close(self):
+        self._alive = False
+
+    def isAlive(self) -> bool:
+        return self._alive
