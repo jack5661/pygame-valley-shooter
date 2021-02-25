@@ -8,7 +8,7 @@ class Assets:
     FLOOR = ASSETS_PATH + "Floor.png"
     ENEMY = ASSETS_PATH + "enemy.png"
     BULLET = ASSETS_PATH + "bullet.png"
-    OPENING_CARD = ASSETS_PATH + "opening.png"
+    OPENING_CARD = ASSETS_PATH + "Opening.png"
     PLAY_BTN = ASSETS_PATH + "play_button.png"
 
 GAME_SIZE = GAME_WIDTH, GAME_HEIGHT = 650, 400

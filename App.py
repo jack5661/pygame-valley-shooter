@@ -36,7 +36,7 @@ class App:
     def on_event(self, event):
         print("Event: ", event.type)
 
-        if event.type == pygame.KEYDOWN:
+        if not self._opening.isAlive() and event.type == pygame.KEYDOWN:
             if event.key == K_SPACE:
                 self._paused = not self._paused
                 
@@ -49,9 +49,13 @@ class App:
             self._running = False
 
         if event.type == pygame.MOUSEBUTTONDOWN:
-
+            mouse = pygame.mouse.get_pos()
+            self._opening.startGame(mouse)
 
     def on_loop(self):
+        if self._opening.isAlive():
+            return
+
         if self._player.isAlive() and self._enemyTimer == self._ENEMYSPAWNTIME:
             toSpawn = Enemy.spawnEnemy(self._clock.getRound() + 1)
             for mob in toSpawn:
@@ -71,6 +75,11 @@ class App:
         self._clock.incrTime()
 
     def on_render(self):
+        if self._opening.isAlive():
+            self._opening.draw(self._display_surf)
+            pygame.display.update()
+            return
+
         self._display_surf.fill(Helpers.Colours.BLANK)
         self._background.draw(self._display_surf)
         for entity in self._entities:
@@ -86,9 +95,8 @@ class App:
             self._running = False
         
         while (self._running):
-
+            
             if not self._paused:
-
                 for event in pygame.event.get():
                     self.on_event(event)
 
@@ -107,7 +115,6 @@ class App:
                 self.on_loop()
 
                 self.on_render()
-            
             else:
                 for event in pygame.event.get():
                     self.on_event(event)
