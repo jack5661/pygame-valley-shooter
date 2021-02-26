@@ -23,14 +23,18 @@ class App:
         self._background = Background()
         self._clock = None
         self._paused = False
-        self._opening = Opening()
+        try:
+            self._opening.isAlive()
+        except AttributeError:
+            self._opening = Opening()
  
     def on_init(self):
         pygame.init()
         self._clock = Clock(pygame.font)
+        self._opening.initTitle(pygame.font)
         self._display_surf = pygame.display.set_mode(Helpers.GAME_SIZE, pygame.HWSURFACE | pygame.DOUBLEBUF)
         self._running = True
-        pygame.display.set_caption("Life in the Valley")
+        pygame.display.set_caption(Helpers.GAME_TITLE)
         
  
     def on_event(self, event):

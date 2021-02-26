@@ -15,6 +15,8 @@ GAME_SIZE = GAME_WIDTH, GAME_HEIGHT = 650, 400
 
 GAME_TILE = 50
 
+GAME_TITLE = "Valley Shooter"
+
 FPS = 30
 
 class Colours:

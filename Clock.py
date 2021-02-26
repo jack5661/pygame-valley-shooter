@@ -8,7 +8,7 @@ class Clock:
     ROUND_1 = 30
     ROUND_2 = 60
     ROUND_3 = 90
-    ROUND = 30
+    ROUND = 15
     ROUND_COORD = (0, 0)
     TIMER_COORD = (Helpers.GAME_TILE * 12, 0)
 

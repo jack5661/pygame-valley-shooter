@@ -3,8 +3,9 @@ import Helpers
 from Button import Button
 
 class Opening:
-    PLAYBTN_X = 200
-    PLAYBTN_Y = 200
+    PLAYBTN_X = 250
+    PLAYBTN_Y = 220
+    TITLE_COORD = (200, 150)
     
     def __init__(self):
         self._screenCard = pygame.image.load(Helpers.Assets.OPENING_CARD)
@@ -13,11 +14,20 @@ class Opening:
 
         self._playBtn = Button(Helpers.Assets.PLAY_BTN, (self.PLAYBTN_X, self.PLAYBTN_Y))
 
+        self._font = None
+        self._title = None
+
         self._alive = True
 
     def draw(self, surface):
         surface.blit(self._screenCard, self._rectCard)
+        surface.blit(self._title, self.TITLE_COORD)
         self._playBtn.draw(surface)
+
+    def initTitle(self, fonts):
+        if self._alive:
+            self._font = fonts.SysFont("comicsansms", 40)
+            self._title = self._font.render(Helpers.GAME_TITLE, True, Helpers.Colours.WHITE)
 
     def isAlive(self) -> bool:
         return self._alive
