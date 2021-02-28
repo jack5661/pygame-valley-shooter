@@ -77,6 +77,9 @@ class Bullet(pygame.sprite.Sprite):
         self.rect = self.rect.move(spawn)
 
     def update(self):
+        if not Bound_Detector.check(self.rect, self._speed, self._dir):
+            self.kill()
+            
         if self._dir == Helpers.Direction.UP:
             self.rect.move_ip(0, -self._speed)
         elif self._dir == Helpers.Direction.RIGHT:
