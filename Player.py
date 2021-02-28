@@ -71,7 +71,7 @@ class Player(pygame.sprite.Sprite):
         return self._alive
 
 class Bullet(pygame.sprite.Sprite):
-    def __init__(self, direction: "Direction", spawn: tuple):
+    def __init__(self, direction: "Direction", spawn: tuple):        
         super().__init__()
         self.image = pygame.image.load(Helpers.Assets.BULLET)
         self._dir = direction
