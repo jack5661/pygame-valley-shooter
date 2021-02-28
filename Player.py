@@ -3,6 +3,9 @@ from pygame.locals import *
 import Helpers
 from Bound_Detector import Bound_Detector
 
+"""
+Player representation in game
+"""
 class Player(pygame.sprite.Sprite):
     reloadCounter = 0
 
